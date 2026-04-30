@@ -1,0 +1,12 @@
+/// <reference types="vitest" />
+import { defineConfig } from 'vite'
+import tailwindcss from '@tailwindcss/vite'
+
+export default defineConfig({
+  plugins: [tailwindcss()],
+  test: {
+    environment: 'happy-dom',
+    globals: true,
+    include: ['src/**/*.test.ts'],
+  },
+})

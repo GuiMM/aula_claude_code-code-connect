@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-page: #00090E;
+  --color-bg-card: #171D1F;
+  --color-bg-input: #888888;
+  --color-text-primary: #E1E1E1;
+  --color-text-muted: #888888;
+  --color-text-on-input: #00090E;
+  --color-text-on-primary: #132E35;
+  --color-brand-green: #81FE88;
+  --color-border-subtle: #888888;
+
+  --font-sans: "Prompt", system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+  }
+}
