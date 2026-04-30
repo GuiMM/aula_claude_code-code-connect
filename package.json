@@ -10,7 +10,8 @@
     "api:build": "pnpm --filter api build",
     "api:start": "pnpm --filter api start:prod",
     "api:test": "pnpm --filter api test",
-    "dev": "pnpm --parallel --filter \"./apps/*\" dev"
+    "dev": "pnpm --parallel --filter \"./apps/*\" dev",
+    "web:test": "pnpm --filter web test"
   },
   "dependencies": {
     "@rolldown/binding-win32-x64-msvc": "1.0.0-rc.17"
