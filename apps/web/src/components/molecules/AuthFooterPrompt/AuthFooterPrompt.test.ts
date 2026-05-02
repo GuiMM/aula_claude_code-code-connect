@@ -21,10 +21,9 @@ describe('AuthFooterPrompt', () => {
     expect(onLinkClick).toHaveBeenCalledOnce()
   })
 
-  it('renders a material icon when linkIcon is provided', () => {
+  it('renders SVG icon when linkIcon is provided', () => {
     const el = AuthFooterPrompt({ text: 'Já tem conta?', linkText: 'Faça seu login!', linkIcon: 'login' })
-    const iconSpan = el.querySelector('span.material-icons')
-    expect(iconSpan).not.toBeNull()
-    expect(iconSpan?.textContent).toBe('login')
+    const icon = el.querySelector('svg[aria-hidden="true"]')
+    expect(icon).not.toBeNull()
   })
 })

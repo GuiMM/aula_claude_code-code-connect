@@ -1,9 +1,10 @@
 import { Link } from '../../atoms/Link/Link'
+import type { IconName } from '../../atoms/Icon/Icon'
 
 export interface AuthFooterPromptProps {
   text: string
   linkText: string
-  linkIcon?: string
+  linkIcon?: IconName
   onLinkClick?: () => void
 }
 

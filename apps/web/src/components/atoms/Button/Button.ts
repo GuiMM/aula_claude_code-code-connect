@@ -1,10 +1,12 @@
+import { Icon, type IconName } from '../Icon/Icon'
+
 export type ButtonVariant = 'primary' | 'social'
 
 export interface ButtonProps {
   label: string
   variant?: ButtonVariant
   iconSrc?: string
-  iconAfter?: string
+  iconAfter?: IconName
   type?: 'button' | 'submit'
   onClick?: (e: MouseEvent) => void
 }
@@ -41,10 +43,7 @@ export function Button({
   el.appendChild(span)
 
   if (iconAfter) {
-    const iconSpan = document.createElement('span')
-    iconSpan.className = 'material-icons text-lg'
-    iconSpan.textContent = iconAfter
-    el.appendChild(iconSpan)
+    el.appendChild(Icon({ name: iconAfter }))
   }
 
   if (onClick) el.addEventListener('click', onClick)

@@ -10,7 +10,7 @@ describe('RegisterPage', () => {
   it('renders the register banner', () => {
     const el = RegisterPage()
     const img = el.querySelector('img')
-    expect(img?.getAttribute('src')).toBe('/banner-cadastro.png')
+    expect(img?.getAttribute('src')).toBe('/banner-cadastro.webp')
   })
 
   it('renders the register form fields', () => {

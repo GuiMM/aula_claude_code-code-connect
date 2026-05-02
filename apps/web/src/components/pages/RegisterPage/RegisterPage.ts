@@ -4,7 +4,7 @@ import { RegisterForm } from '../../organisms/RegisterForm/RegisterForm'
 
 export function RegisterPage(): HTMLElement {
   return AuthTemplate({
-    banner: AuthBanner({ imageSrc: '/banner-cadastro.png' }),
+    banner: AuthBanner({ imageSrc: '/banner-cadastro.webp' }),
     form: RegisterForm({
       onSubmit: (data) => {
         console.log('Register attempt:', data)

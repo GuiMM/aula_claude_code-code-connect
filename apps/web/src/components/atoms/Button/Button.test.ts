@@ -40,15 +40,14 @@ describe('Button', () => {
     expect(btn.querySelector('img')).toBeNull()
   })
 
-  it('renders material icon span when iconAfter is provided', () => {
+  it('renders SVG icon when iconAfter is provided', () => {
     const btn = Button({ label: 'Cadastrar', iconAfter: 'arrow_forward' })
-    const iconSpan = btn.querySelector('span.material-icons')
-    expect(iconSpan).not.toBeNull()
-    expect(iconSpan?.textContent).toBe('arrow_forward')
+    const icon = btn.querySelector('svg[aria-hidden="true"]')
+    expect(icon).not.toBeNull()
   })
 
-  it('does not render material icon span when iconAfter is absent', () => {
+  it('does not render SVG icon when iconAfter is absent', () => {
     const btn = Button({ label: 'Login' })
-    expect(btn.querySelector('span.material-icons')).toBeNull()
+    expect(btn.querySelector('svg')).toBeNull()
   })
 })

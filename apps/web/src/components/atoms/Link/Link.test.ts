@@ -18,6 +18,11 @@ describe('Link', () => {
     expect(link.className).toContain('text-brand-green')
   })
 
+  it('accent variant has underline in rest state', () => {
+    const link = Link({ text: 'Crie seu cadastro!', variant: 'accent' })
+    expect(link.className).toContain('underline')
+  })
+
   it('applies muted styling for default variant', () => {
     const link = Link({ text: 'Esqueci a senha' })
     expect(link.className).toContain('text-text-muted')
@@ -32,15 +37,15 @@ describe('Link', () => {
     expect(event.defaultPrevented).toBe(true)
   })
 
-  it('renders material icon span when iconAfter is provided', () => {
+  it('renders SVG icon when iconAfter is provided', () => {
     const link = Link({ text: 'Faça seu login!', iconAfter: 'login', variant: 'accent' })
-    const iconSpan = link.querySelector('span.material-icons')
-    expect(iconSpan).not.toBeNull()
-    expect(iconSpan?.textContent).toBe('login')
+    const icon = link.querySelector('svg[aria-hidden="true"]')
+    expect(icon).not.toBeNull()
   })
 
-  it('does not render icon span when iconAfter is absent', () => {
+  it('does not render icon when iconAfter is absent', () => {
     const link = Link({ text: 'Esqueci a senha' })
+    expect(link.querySelector('svg')).toBeNull()
     expect(link.querySelector('span')).toBeNull()
   })
 })
