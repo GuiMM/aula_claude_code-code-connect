@@ -1,14 +1,41 @@
 import { ConflictException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
+import { randomUUID } from 'node:crypto';
+import { User } from './entities/user.entity';
 import { UsersService } from './users.service';
 
 describe('UsersService', () => {
   let service: UsersService;
+  let store: User[];
 
   beforeEach(async () => {
+    store = [];
+
+    const mockRepo = {
+      create: jest.fn((dto: Partial<User>) => ({ ...dto }) as User),
+      save: jest.fn((user: User) => {
+        const saved = { ...user, id: randomUUID() };
+        store.push(saved);
+        return Promise.resolve(saved);
+      }),
+      findOne: jest.fn(({ where }: { where: Partial<User> }) => {
+        const [[key, val]] = Object.entries(where);
+        return Promise.resolve(
+          store.find((u) => u[key as keyof User] === val) ?? null,
+        );
+      }),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
-      providers: [UsersService],
+      providers: [
+        UsersService,
+        {
+          provide: getRepositoryToken(User),
+          useValue: mockRepo,
+        },
+      ],
     }).compile();
 
     service = module.get<UsersService>(UsersService);
@@ -55,11 +82,11 @@ describe('UsersService', () => {
         password: 'cobol-rocks',
       });
 
-      expect(service.findByEmail('grace@example.com')).toBe(created);
+      expect(await service.findByEmail('grace@example.com')).toBe(created);
     });
 
-    it('retorna undefined quando o email não existe', () => {
-      expect(service.findByEmail('ghost@example.com')).toBeUndefined();
+    it('retorna null quando o email não existe', async () => {
+      expect(await service.findByEmail('ghost@example.com')).toBeNull();
     });
   });
 
@@ -71,11 +98,11 @@ describe('UsersService', () => {
         password: 'kernel-panic',
       });
 
-      expect(service.findById(created.id)).toBe(created);
+      expect(await service.findById(created.id)).toBe(created);
     });
 
-    it('retorna undefined quando o id não existe', () => {
-      expect(service.findById('nope')).toBeUndefined();
+    it('retorna null quando o id não existe', async () => {
+      expect(await service.findById('nope')).toBeNull();
     });
   });
 });

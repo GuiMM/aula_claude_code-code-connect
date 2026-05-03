@@ -96,3 +96,10 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+
+## Palavras chave
+
+- monorepo
+- spec-driven design(planeja antes de pedir para o agent, define critérios de aceite, e revisa antes de aceitar)
+- spec kit

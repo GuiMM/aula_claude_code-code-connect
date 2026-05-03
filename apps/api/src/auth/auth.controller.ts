@@ -61,8 +61,8 @@ export class AuthController {
   @ApiOperation({ summary: 'Retorna os dados do usuário autenticado' })
   @ApiResponse({ status: 200, type: UserResponseDto })
   @ApiResponse({ status: 401, description: 'Token ausente ou inválido' })
-  me(@Request() req: RequestWithUser): UserResponseDto {
-    const user = this.usersService.findById(req.user.userId);
+  async me(@Request() req: RequestWithUser): Promise<UserResponseDto> {
+    const user = await this.usersService.findById(req.user.userId);
     if (!user) {
       throw new UnauthorizedException();
     }

@@ -89,7 +89,7 @@ describe('AuthService', () => {
     });
 
     it('retorna access_token quando credenciais são válidas', async () => {
-      usersService.findByEmail.mockReturnValue(validUser);
+      usersService.findByEmail.mockResolvedValue(validUser);
       jwtService.signAsync.mockResolvedValue('signed.jwt.token');
 
       const result = await service.login({
@@ -105,7 +105,7 @@ describe('AuthService', () => {
     });
 
     it('lança UnauthorizedException quando o usuário não existe', async () => {
-      usersService.findByEmail.mockReturnValue(undefined);
+      usersService.findByEmail.mockResolvedValue(null);
 
       await expect(
         service.login({ email: 'ghost@example.com', password: 'whatever' }),
@@ -114,7 +114,7 @@ describe('AuthService', () => {
     });
 
     it('lança UnauthorizedException quando a senha está errada', async () => {
-      usersService.findByEmail.mockReturnValue(validUser);
+      usersService.findByEmail.mockResolvedValue(validUser);
 
       await expect(
         service.login({
