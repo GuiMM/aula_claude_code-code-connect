@@ -14,7 +14,7 @@ export interface RegisterFormData {
 }
 
 export interface RegisterFormProps {
-  onSubmit?: (data: RegisterFormData) => void
+  onSubmit?: (data: RegisterFormData) => Promise<void> | void
   onLogin?: () => void
 }
 
@@ -37,10 +37,17 @@ export function RegisterForm({ onSubmit, onLogin }: RegisterFormProps = {}): HTM
   fields.appendChild(FormField({ label: 'Email', name: 'email', type: 'email', placeholder: 'Digite seu email' }))
   fields.appendChild(FormField({ label: 'Senha', name: 'password', type: 'password', placeholder: '••••••' }))
 
+  const errorEl = document.createElement('p')
+  errorEl.setAttribute('data-error', '')
+  errorEl.className = 'text-sm text-red-400 hidden'
+
+  const submitBtn = Button({ label: 'Cadastrar', iconAfter: 'arrow_forward', type: 'submit', variant: 'primary' })
+
   form.appendChild(header)
   form.appendChild(fields)
   form.appendChild(Checkbox({ label: 'Lembrar-me', name: 'remember' }))
-  form.appendChild(Button({ label: 'Cadastrar', iconAfter: 'arrow_forward', type: 'submit', variant: 'primary' }))
+  form.appendChild(errorEl)
+  form.appendChild(submitBtn)
   form.appendChild(Divider({ label: 'ou entre com outras contas' }))
   form.appendChild(
     SocialLogins({
@@ -59,15 +66,26 @@ export function RegisterForm({ onSubmit, onLogin }: RegisterFormProps = {}): HTM
     }),
   )
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault()
     const data = new FormData(form)
-    onSubmit?.({
-      name: (data.get('name') as string) ?? '',
-      email: (data.get('email') as string) ?? '',
-      password: (data.get('password') as string) ?? '',
-      remember: data.get('remember') === 'on',
-    })
+    errorEl.textContent = ''
+    errorEl.classList.add('hidden')
+    submitBtn.disabled = true
+
+    try {
+      await onSubmit?.({
+        name: (data.get('name') as string) ?? '',
+        email: (data.get('email') as string) ?? '',
+        password: (data.get('password') as string) ?? '',
+        remember: data.get('remember') === 'on',
+      })
+    } catch (err) {
+      errorEl.textContent = err instanceof Error ? err.message : 'Erro ao criar conta.'
+      errorEl.classList.remove('hidden')
+    } finally {
+      submitBtn.disabled = false
+    }
   })
 
   return form

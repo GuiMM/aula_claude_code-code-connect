@@ -7,13 +7,13 @@ import { SocialLogins } from '../../molecules/SocialLogins/SocialLogins'
 import { AuthFooterPrompt } from '../../molecules/AuthFooterPrompt/AuthFooterPrompt'
 
 export interface LoginFormData {
-  username: string
+  email: string
   password: string
   remember: boolean
 }
 
 export interface LoginFormProps {
-  onSubmit?: (data: LoginFormData) => void
+  onSubmit?: (data: LoginFormData) => Promise<void> | void
   onForgotPassword?: () => void
   onSignup?: () => void
 }
@@ -33,14 +33,19 @@ export function LoginForm({ onSubmit, onForgotPassword, onSignup }: LoginFormPro
 
   const fields = document.createElement('div')
   fields.className = 'flex flex-col gap-4'
-  fields.appendChild(FormField({ label: 'Email ou usuário', name: 'username', placeholder: 'usuario123' }))
+  fields.appendChild(FormField({ label: 'Email', name: 'email', type: 'email', placeholder: 'seu@email.com' }))
   fields.appendChild(FormField({ label: 'Senha', name: 'password', type: 'password', placeholder: '••••••' }))
+
+  const errorEl = document.createElement('p')
+  errorEl.setAttribute('data-error', '')
+  errorEl.className = 'text-sm text-red-400 hidden'
 
   const submitBtn = Button({ label: 'Login', iconAfter: 'arrow_forward', type: 'submit', variant: 'primary' })
 
   form.appendChild(header)
   form.appendChild(fields)
   form.appendChild(RememberRow({ onForgotPassword }))
+  form.appendChild(errorEl)
   form.appendChild(submitBtn)
   form.appendChild(Divider({ label: 'ou entre com outras contas' }))
   form.appendChild(
@@ -59,14 +64,25 @@ export function LoginForm({ onSubmit, onForgotPassword, onSignup }: LoginFormPro
     }),
   )
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault()
     const data = new FormData(form)
-    onSubmit?.({
-      username: (data.get('username') as string) ?? '',
-      password: (data.get('password') as string) ?? '',
-      remember: data.get('remember') === 'on',
-    })
+    errorEl.textContent = ''
+    errorEl.classList.add('hidden')
+    submitBtn.disabled = true
+
+    try {
+      await onSubmit?.({
+        email: (data.get('email') as string) ?? '',
+        password: (data.get('password') as string) ?? '',
+        remember: data.get('remember') === 'on',
+      })
+    } catch (err) {
+      errorEl.textContent = err instanceof Error ? err.message : 'Erro ao fazer login.'
+      errorEl.classList.remove('hidden')
+    } finally {
+      submitBtn.disabled = false
+    }
   })
 
   return form
