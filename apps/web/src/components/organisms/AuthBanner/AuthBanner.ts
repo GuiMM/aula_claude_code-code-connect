@@ -11,6 +11,9 @@ export function AuthBanner({ imageSrc, alt = 'code connect' }: AuthBannerProps):
   img.src = imageSrc
   img.alt = alt
   img.className = 'w-full h-full object-cover'
+  img.setAttribute('fetchpriority', 'high')
+  img.decoding = 'async'
+  img.loading = 'eager'
 
   wrapper.appendChild(img)
 

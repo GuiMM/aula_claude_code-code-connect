@@ -39,4 +39,15 @@ describe('Button', () => {
     const btn = Button({ label: 'Login' })
     expect(btn.querySelector('img')).toBeNull()
   })
+
+  it('renders SVG icon when iconAfter is provided', () => {
+    const btn = Button({ label: 'Cadastrar', iconAfter: 'arrow_forward' })
+    const icon = btn.querySelector('svg[aria-hidden="true"]')
+    expect(icon).not.toBeNull()
+  })
+
+  it('does not render SVG icon when iconAfter is absent', () => {
+    const btn = Button({ label: 'Login' })
+    expect(btn.querySelector('svg')).toBeNull()
+  })
 })

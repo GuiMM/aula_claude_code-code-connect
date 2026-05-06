@@ -20,4 +20,10 @@ describe('AuthFooterPrompt', () => {
     el.querySelector('a')!.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true }))
     expect(onLinkClick).toHaveBeenCalledOnce()
   })
+
+  it('renders SVG icon when linkIcon is provided', () => {
+    const el = AuthFooterPrompt({ text: 'Já tem conta?', linkText: 'Faça seu login!', linkIcon: 'login' })
+    const icon = el.querySelector('svg[aria-hidden="true"]')
+    expect(icon).not.toBeNull()
+  })
 })
