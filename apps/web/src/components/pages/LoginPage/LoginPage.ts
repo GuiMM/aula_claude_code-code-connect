@@ -4,7 +4,7 @@ import { LoginForm } from '../../organisms/LoginForm/LoginForm'
 
 export function LoginPage(): HTMLElement {
   return AuthTemplate({
-    banner: AuthBanner({ imageSrc: '/banner.png' }),
+    banner: AuthBanner({ imageSrc: '/banner.webp' }),
     form: LoginForm({
       onSubmit: (data) => {
         console.log('Login attempt:', { username: data.username, remember: data.remember })

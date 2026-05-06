@@ -18,6 +18,11 @@ describe('Link', () => {
     expect(link.className).toContain('text-brand-green')
   })
 
+  it('accent variant has underline in rest state', () => {
+    const link = Link({ text: 'Crie seu cadastro!', variant: 'accent' })
+    expect(link.className).toContain('underline')
+  })
+
   it('applies muted styling for default variant', () => {
     const link = Link({ text: 'Esqueci a senha' })
     expect(link.className).toContain('text-text-muted')
@@ -30,5 +35,17 @@ describe('Link', () => {
     link.dispatchEvent(event)
     expect(onClick).toHaveBeenCalledOnce()
     expect(event.defaultPrevented).toBe(true)
+  })
+
+  it('renders SVG icon when iconAfter is provided', () => {
+    const link = Link({ text: 'Faça seu login!', iconAfter: 'login', variant: 'accent' })
+    const icon = link.querySelector('svg[aria-hidden="true"]')
+    expect(icon).not.toBeNull()
+  })
+
+  it('does not render icon when iconAfter is absent', () => {
+    const link = Link({ text: 'Esqueci a senha' })
+    expect(link.querySelector('svg')).toBeNull()
+    expect(link.querySelector('span')).toBeNull()
   })
 })
