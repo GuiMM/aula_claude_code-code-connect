@@ -1,4 +1,17 @@
-export type HeadingLevel = 1 | 2 | 3
+import { cva, type VariantProps } from 'class-variance-authority'
+
+const headingVariants = cva('text-white', {
+  variants: {
+    level: {
+      1: 'text-2xl font-bold',
+      2: 'text-lg font-semibold',
+      3: 'text-base font-medium',
+    },
+  },
+  defaultVariants: { level: 1 },
+})
+
+export type HeadingLevel = NonNullable<VariantProps<typeof headingVariants>['level']>
 
 export interface HeadingProps {
   text: string
@@ -8,13 +21,6 @@ export interface HeadingProps {
 export function Heading({ text, level = 1 }: HeadingProps): HTMLHeadingElement {
   const el = document.createElement(`h${level}`) as HTMLHeadingElement
   el.textContent = text
-
-  const sizeMap: Record<HeadingLevel, string> = {
-    1: 'text-2xl font-bold text-white',
-    2: 'text-lg font-semibold text-white',
-    3: 'text-base font-medium text-white',
-  }
-
-  el.className = sizeMap[level]
+  el.className = headingVariants({ level })
   return el
 }
