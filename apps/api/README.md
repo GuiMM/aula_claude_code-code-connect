@@ -103,3 +103,4 @@ Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 - monorepo
 - spec-driven design(planeja antes de pedir para o agent, define critérios de aceite, e revisa antes de aceitar)
 - spec kit
+- atomic design

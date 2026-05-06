@@ -16,6 +16,11 @@ async function bootstrap() {
     }),
   );
 
+  app.enableCors({
+    origin: process.env.WEB_ORIGIN ?? 'http://localhost:5173',
+    credentials: false,
+  });
+
   const config = new DocumentBuilder()
     .setTitle('Code Connect API')
     .setDescription('API de autenticação e usuários do Code Connect')
