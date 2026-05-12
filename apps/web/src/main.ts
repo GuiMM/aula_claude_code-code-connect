@@ -1,26 +1,30 @@
 import './style.css'
 import { LoginPage } from './components/pages/LoginPage/LoginPage'
 import { RegisterPage } from './components/pages/RegisterPage/RegisterPage'
-import { HomePage } from './components/pages/HomePage/HomePage'
+import { FeedPage } from './components/pages/FeedPage/FeedPage'
+import { PostDetailPage } from './components/pages/PostDetailPage/PostDetailPage'
 import { getToken } from './services/tokenStorage'
 
 const root = document.querySelector<HTMLDivElement>('#app')!
 
 function render() {
-  const hash = window.location.hash || '#/login'
+  const hash = window.location.hash || '#/feed'
   const isLoggedIn = !!getToken()
 
   if (isLoggedIn && (hash === '#/login' || hash === '#/cadastro')) {
-    window.location.hash = '#/home'
+    window.location.hash = '#/feed'
     return
   }
 
   if (hash === '#/cadastro') {
     root.replaceChildren(RegisterPage())
-  } else if (hash === '#/home') {
-    root.replaceChildren(HomePage())
-  } else {
+  } else if (hash === '#/login') {
     root.replaceChildren(LoginPage())
+  } else if (hash.startsWith('#/posts/')) {
+    const postId = hash.replace('#/posts/', '').split('/')[0]
+    root.replaceChildren(PostDetailPage({ postId }))
+  } else {
+    root.replaceChildren(FeedPage())
   }
 }
 

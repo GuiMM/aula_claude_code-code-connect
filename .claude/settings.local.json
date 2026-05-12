@@ -2,7 +2,12 @@
   "permissions": {
     "allow": [
       "mcp__github__create_or_update_file",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git cherry-pick *)",
+      "Bash(git checkout *)",
+      "Bash(git push *)",
+      "mcp__github__create_pull_request"
     ]
   }
 }

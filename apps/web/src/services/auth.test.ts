@@ -21,15 +21,6 @@ vi.mock('./tokenStorage', () => ({
 }))
 
 import { http } from './http'
-import { isAxiosError } from 'axios'
-
-function makeAxiosError(status: number, data: unknown) {
-  const err = new Error('Request failed') as Error & { isAxiosError: boolean; response: unknown }
-  err.isAxiosError = true
-  err.response = { status, data }
-  vi.spyOn({ isAxiosError }, 'isAxiosError' as never)
-  return err
-}
 
 beforeEach(() => {
   vi.clearAllMocks()
