@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+*\node_modules\*
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Build outputs
+dist/
+build/
+.vite/
+
+# NestJS
+apps/api/dist/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Test coverage
+coverage/
+
+# pnpm
+pnpm-lock.yaml.*.bak
+*.bak
+
+# TypeScript
+*.tsbuildinfo
