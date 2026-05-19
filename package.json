@@ -9,6 +9,7 @@
     "api:dev": "pnpm --filter api start:dev",
     "api:build": "pnpm --filter api build",
     "api:start": "pnpm --filter api start:prod",
+    "api:debug": "pnpm --filter api debug",
     "api:test": "pnpm --filter api test",
     "dev": "pnpm --parallel --filter \"./apps/*\" dev",
     "web:test": "pnpm --filter web test"
