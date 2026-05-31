@@ -25,6 +25,7 @@ export class CommentResponseDto {
   @ApiProperty() id: string;
   @ApiProperty() content: string;
   @ApiProperty({ type: PostAuthorDto }) author: PostAuthorDto;
+  @ApiPropertyOptional({ nullable: true }) parentId: string | null;
   @ApiProperty() createdAt: Date;
 }
 

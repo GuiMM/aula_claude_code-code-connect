@@ -3,6 +3,7 @@ import { LoginPage } from './components/pages/LoginPage/LoginPage'
 import { RegisterPage } from './components/pages/RegisterPage/RegisterPage'
 import { FeedPage } from './components/pages/FeedPage/FeedPage'
 import { PostDetailPage } from './components/pages/PostDetailPage/PostDetailPage'
+import { ComingSoonPage } from './components/pages/ComingSoonPage/ComingSoonPage'
 import { getToken } from './services/tokenStorage'
 
 const root = document.querySelector<HTMLDivElement>('#app')!
@@ -20,6 +21,12 @@ function render() {
     root.replaceChildren(RegisterPage())
   } else if (hash === '#/login') {
     root.replaceChildren(LoginPage())
+  } else if (hash === '#/publicar') {
+    root.replaceChildren(ComingSoonPage({ title: 'Publicar' }))
+  } else if (hash === '#/perfil') {
+    root.replaceChildren(ComingSoonPage({ title: 'Perfil' }))
+  } else if (hash === '#/sobre') {
+    root.replaceChildren(ComingSoonPage({ title: 'Sobre nós' }))
   } else if (hash.startsWith('#/posts/')) {
     const postId = hash.replace('#/posts/', '').split('/')[0]
     root.replaceChildren(PostDetailPage({ postId }))

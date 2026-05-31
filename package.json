@@ -11,6 +11,7 @@
     "api:start": "pnpm --filter api start:prod",
     "api:debug": "pnpm --filter api debug",
     "api:test": "pnpm --filter api test",
+    "api:seed": "pnpm --filter api exec ts-node src/seeders/seed.ts",
     "dev": "pnpm --parallel --filter \"./apps/*\" dev",
     "web:test": "pnpm --filter web test"
   },
