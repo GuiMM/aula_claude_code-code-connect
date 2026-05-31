@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   ForbiddenException,
   Injectable,
@@ -141,6 +142,7 @@ export class PostsService {
       id: c.id,
       content: c.content,
       author: { id: c.author.id, name: c.author.name },
+      parentId: c.parentId ?? null,
       createdAt: c.createdAt,
     }));
   }
@@ -153,7 +155,23 @@ export class PostsService {
     const post = await this.postsRepo.findOne({ where: { id: postId } });
     if (!post) throw new NotFoundException('Post não encontrado');
 
-    const comment = this.commentsRepo.create({ ...dto, postId, userId });
+    let parentId: string | null = null;
+    if (dto.parentCommentId) {
+      const parent = await this.commentsRepo.findOne({
+        where: { id: dto.parentCommentId },
+      });
+      if (!parent || parent.postId !== postId) {
+        throw new BadRequestException('Resposta inválida');
+      }
+      parentId = parent.id;
+    }
+
+    const comment = this.commentsRepo.create({
+      content: dto.content,
+      postId,
+      userId,
+      parentId,
+    });
     const saved = await this.commentsRepo.save(comment);
 
     const withAuthor = await this.commentsRepo.findOne({
@@ -165,6 +183,7 @@ export class PostsService {
       id: withAuthor!.id,
       content: withAuthor!.content,
       author: { id: withAuthor!.author.id, name: withAuthor!.author.name },
+      parentId: withAuthor!.parentId ?? null,
       createdAt: withAuthor!.createdAt,
     };
   }

@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
@@ -22,11 +23,23 @@ export class Comment {
   @Column()
   userId: string;
 
+  @Column({ nullable: true, type: 'uuid' })
+  parentId: string | null;
+
   @ManyToOne(() => Post, (post) => post.comments, { onDelete: 'CASCADE' })
   post: Post;
 
   @ManyToOne(() => User, { eager: false, onDelete: 'CASCADE' })
   author: User;
+
+  @ManyToOne(() => Comment, (comment) => comment.replies, {
+    onDelete: 'CASCADE',
+    nullable: true,
+  })
+  parent: Comment | null;
+
+  @OneToMany(() => Comment, (comment) => comment.parent)
+  replies: Comment[];
 
   @CreateDateColumn()
   createdAt: Date;

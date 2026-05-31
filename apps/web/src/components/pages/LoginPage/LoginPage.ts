@@ -17,7 +17,7 @@ export function LoginPage(): HTMLElement {
         console.log('Forgot password clicked')
       },
       onSignup: () => {
-        console.log('Signup clicked')
+        window.location.hash = '#/cadastro'
       },
     }),
   })

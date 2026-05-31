@@ -25,6 +25,7 @@ export interface PostComment {
   id: string
   content: string
   author: PostAuthor
+  parentId: string | null
   createdAt: string
 }
 
@@ -71,7 +72,13 @@ export async function getComments(postId: string): Promise<PostComment[]> {
   return res.data
 }
 
-export async function createComment(postId: string, content: string): Promise<PostComment> {
-  const res = await http.post<PostComment>(`/posts/${postId}/comments`, { content })
+export async function createComment(
+  postId: string,
+  content: string,
+  parentCommentId?: string,
+): Promise<PostComment> {
+  const body: { content: string; parentCommentId?: string } = { content }
+  if (parentCommentId) body.parentCommentId = parentCommentId
+  const res = await http.post<PostComment>(`/posts/${postId}/comments`, body)
   return res.data
 }

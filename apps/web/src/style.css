@@ -1,10 +1,12 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand-green: #62F277;
+  --color-brand-green: #81FE88;
   --color-bg-page: #0B0C10;
-  --color-bg-card: #17181E;
+  --color-bg-card: #171D1F;
   --color-bg-input: #2A2C36;
+  --color-bg-section: #888888;
   --color-border-subtle: #3A3C4A;
-  --color-text-muted: #A0A3B1;
+  --color-text-muted: #888888;
+  --color-text-secondary: #BCBCBC;
 }
