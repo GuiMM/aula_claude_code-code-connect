@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -30,6 +31,7 @@ export class Comment {
   post: Post;
 
   @ManyToOne(() => User, { eager: false, onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'userId' })
   author: User;
 
   @ManyToOne(() => Comment, (comment) => comment.replies, {

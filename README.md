@@ -49,6 +49,7 @@ code-connect/
 | `pnpm api:test` | Jest (todos os `*.spec.ts` do api) |
 | `pnpm web:build` | `tsc --strict` + build de produção Vite |
 | `pnpm api:build` | Compila NestJS para `dist/` |
+| `pnpm api:seed` | Popula o banco com usuários, posts e comentários de exemplo |
 
 ## Atomic Design no `apps/web`
 
