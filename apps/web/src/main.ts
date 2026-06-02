@@ -4,6 +4,7 @@ import { RegisterPage } from './components/pages/RegisterPage/RegisterPage'
 import { FeedPage } from './components/pages/FeedPage/FeedPage'
 import { PostDetailPage } from './components/pages/PostDetailPage/PostDetailPage'
 import { ComingSoonPage } from './components/pages/ComingSoonPage/ComingSoonPage'
+import { PublishPage } from './components/pages/PublishPage/PublishPage'
 import { getToken } from './services/tokenStorage'
 
 const root = document.querySelector<HTMLDivElement>('#app')!
@@ -22,7 +23,7 @@ function render() {
   } else if (hash === '#/login') {
     root.replaceChildren(LoginPage())
   } else if (hash === '#/publicar') {
-    root.replaceChildren(ComingSoonPage({ title: 'Publicar' }))
+    root.replaceChildren(PublishPage())
   } else if (hash === '#/perfil') {
     root.replaceChildren(ComingSoonPage({ title: 'Perfil' }))
   } else if (hash === '#/sobre') {

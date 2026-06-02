@@ -82,3 +82,17 @@ export async function createComment(
   const res = await http.post<PostComment>(`/posts/${postId}/comments`, body)
   return res.data
 }
+
+export interface CreatePostInput {
+  title: string
+  description: string
+  content: string
+  thumbnailUrl?: string
+}
+
+export async function createPost(input: CreatePostInput): Promise<PostDetail> {
+  const body: CreatePostInput = { title: input.title, description: input.description, content: input.content }
+  if (input.thumbnailUrl) body.thumbnailUrl = input.thumbnailUrl
+  const res = await http.post<PostDetail>('/posts', body)
+  return res.data
+}
